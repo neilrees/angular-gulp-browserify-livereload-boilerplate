@@ -45,9 +45,9 @@
     "opn": "^0.1.1",
     "partialify": "^3.1.1",
     "should": "^3.3.1",
-    "vinyl-source-stream": "^0.1.1"
+    "vinyl-source-stream": "^0.1.1",
+    "wiredep": "^1.8.2"
   },
   "dependencies": {
-    "wiredep": "^1.8.2"
   }
 }
