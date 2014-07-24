@@ -1,16 +1,25 @@
 <!doctype html>
 <html lang="en" ng-app="myApp">
 <head>
-  <title>My awesome app</title>
-  <link rel="stylesheet" href="css/main.css" />
+    <title>My awesome app</title>
+
+    <!-- bower:css -->
+    <!-- endbower -->
+
+    <link rel="stylesheet" href="styles/app.css"/>
 </head>
 <body ng-controller='WelcomeCtrl'>
 
-  <h1>My awesome app</h1>
+<h1>My awesome app</h1>
 
-  <p>{{testVar}}</p>
+<p>{{model.message}}</p>
 
-  <script src="/js/bundle.js"></script>
+<sample></sample>
+
+<!-- bower:js -->
+<!-- endbower -->
+
+<script src="scripts/main.js"></script>
 
 </body>
 </html>

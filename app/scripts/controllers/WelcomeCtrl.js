@@ -1,7 +1,11 @@
 "use strict";
 
-var WelcomeCtrl = function($scope) {
-  $scope.testVar = 'We are up and running from a required module!';
+var SampleModel = require('../models/SampleModel');
+
+function WelcomeController($scope, sampleService) {
+  $scope.model = new SampleModel(sampleService.ping());
 };
 
-module.exports = WelcomeCtrl;
+WelcomeController.$inject = ['$scope', 'sampleService'];
+
+module.exports = WelcomeController;
