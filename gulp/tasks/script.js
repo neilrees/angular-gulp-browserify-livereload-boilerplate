@@ -11,9 +11,10 @@ var size = require('gulp-size');
 var karma = require('karma').server;
 var streamify = require('gulp-streamify');
 var uglify = require('gulp-uglify');
+var templateCache = require('gulp-angular-templatecache');
 var _ = require('lodash');
 
-var step = function() {
+var browserifyStep = function() {
     return browserify('./app/scripts/main.js')
         .transform(partialify)
         .transform(shim)
@@ -21,15 +22,32 @@ var step = function() {
         .pipe(source('main.js'))
 }
 
-gulp.task('script', function () {
-    return step()
-      .pipe(gulp.dest(config.debug + '/scripts/'));
+var templateStep = function() {
+    return gulp.src('./app/templates/**/*.html')
+        .pipe(templateCache({standalone:true}))
+}
+
+gulp.task('templates', function () {
+    return templateStep()
+        .pipe(gulp.dest(config.debug + '/scripts/'))
+        .pipe(size());
 });
 
-gulp.task('scriptDist', function () {
-    return step()
-      .pipe(streamify(uglify()))
-      .pipe(gulp.dest(config.release + '/scripts/'));
+gulp.task('templatesDist', function() {
+    return templateStep()
+        .pipe(gulp.dest(config.release + '/scripts/'))
+        .pipe(size());
+});
+
+gulp.task('script', ['templates'], function () {
+    return browserifyStep()
+        .pipe(gulp.dest(config.debug + '/scripts/'));
+});
+
+gulp.task('scriptDist', ['templatesDist'], function () {
+    return browserifyStep()
+        .pipe(streamify(uglify()))
+        .pipe(gulp.dest(config.release + '/scripts/'));
 });
 
 gulp.task('test', ['scriptDist'], function(done) {
