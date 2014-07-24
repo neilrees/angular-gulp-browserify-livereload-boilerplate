@@ -1,17 +1,21 @@
 ## Example Boilerplate
 
-This is an example Boilerplate for using Angular, Gulp, Browserify and a local webserver with LiveReload.
+This is an example Boilerplate for using Angular, Gulp, Bower, Karma, Jasmine, Browserify and a local webserver with LiveReload.
 
-It's part of the blog post at http://mindthecode.com/lets-build-an-angularjs-app-with-browserify-and-gulp
+It's based on the blog post at http://mindthecode.com/lets-build-an-angularjs-app-with-browserify-and-gulp
+
+Extended to support bower and jasmine tests
 
 ## Installation
 
-    git clone https://github.com/Hyra/angular-gulp-browserify-livereload-boilerplate/ example-app
+    git clone https://github.com/neilrees/angular-gulp-browserify-livereload-boilerplate.git example-app
 
     cd example-app
 
     npm install
 
-    gulp dev
+    bower install
+
+    gulp
 
     
