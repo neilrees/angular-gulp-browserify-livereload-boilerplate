@@ -6,19 +6,19 @@ var livereload = require('gulp-livereload');
 
 // Watch
 gulp.task('watch', ['connect', 'serve'], function () {
-    var server = livereload();
+  var server = livereload();
     // Watch for changes in `app` folder
     gulp.watch([
         '.tmp/**/*'
     ]).on('change', function(file) {
-        server.changed(file.path);
+      server.changed(file.path);
     });
 
     // Watch .less files
     gulp.watch('app/less/**/*.less', ['styles']);
 
     // Watch .js files
-    gulp.watch('app/scripts/**/*.js', ['script', 'jshint']);
+    gulp.watch('app/scripts/**/*.js', ['script']);
 
     // Watch image files
     gulp.watch('app/images/**/*', ['images']);
