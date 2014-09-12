@@ -18,6 +18,8 @@
     "browserify-shim": "^3.5.0",
     "connect": "^2.16.2",
     "connect-livereload": "^0.4.0",
+    "connect-prism": "git+https://git@github.com/neilrees/connect-prism.git",
+    "grunt": "^0.4.5",
     "gulp": "^3.8.6",
     "gulp-angular-templatecache": "^1.2.1",
     "gulp-cache": "^0.1.11",
@@ -39,6 +41,7 @@
     "lodash": "^2.4.1",
     "opn": "^0.1.1",
     "partialify": "^3.1.1",
+    "proxy-middleware": "^0.5.0",
     "vinyl-source-stream": "^0.1.1",
     "wiredep": "^1.8.2"
   },
