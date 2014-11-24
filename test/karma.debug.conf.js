@@ -18,11 +18,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'test/polyfill/**/*.js',
-      'bower_components/jquery/dist/jquery.js',
-      'bower_components/angular/angular.js',
-      'bower_components/angular-mocks/angular-mocks.js',
-      '.tmp/scripts/main.js',
+      'dist/scripts/vendor.js',
+      'dist/scripts/templates.js',
+      'dist/scripts/app.js',
       'test/spec/**/*.js'
     ],
 

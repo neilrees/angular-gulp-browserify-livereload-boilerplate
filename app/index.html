@@ -3,24 +3,20 @@
 <head>
     <title>My awesome app</title>
 
-    <!-- bower:css -->
-    <!-- endbower -->
-
+    <link rel="stylesheet" href="styles/vendor.css"/>
     <link rel="stylesheet" href="styles/app.css"/>
 </head>
 <body ng-controller='WelcomeCtrl'>
 
-<h1>My awesome app</h1>
+	<h1>My awesome app</h1>
 
-<p>{{model.message}}</p>
+	<p>{{model.message}}</p>
 
-<sample></sample>
+	<sample></sample>
 
-<!-- bower:js -->
-<!-- endbower -->
-
-<script src="scripts/templates.js"></script>
-<script src="scripts/main.js"></script>
+	<script src="scripts/vendor.js"></script>
+	<script src="scripts/templates.js"></script>
+	<script src="scripts/main.js"></script>
 
 </body>
 </html>
