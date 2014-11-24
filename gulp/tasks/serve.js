@@ -1,13 +1,10 @@
 'use strict';
 
-var config = require('../config');
 var gulp = require('gulp');
-var connect = require('connect');
-var url = require('url');
-var prism = require('connect-prism');
-
 
 function prismInit(mode) {
+
+    var prism = require('connect-prism');
 
     prism.create({
         name: 'api',
@@ -22,13 +19,19 @@ function prismInit(mode) {
 // Connect
 gulp.task('connect', function () {
 
+    var prism = require('connect-prism');
+    var connect = require('connect');
+    var http = require('http');
+    var serveStatic = require('serve-static');
+
+    var config = require('../config');
+
     var app = connect()
         .use(require('connect-livereload')({ port: config.livereloadPort }))
-        .use('/', connect.static('.tmp'))
-        .use('/bower_components', connect.static('bower_components'))
+        .use(serveStatic('dist'))
         .use(prism.middleware);
 
-    require('http').createServer(app)
+    http.createServer(app)
         .listen(config.port)
         .on('listening', function () {
             console.log('Started connect web server on http://localhost:' + config.port);

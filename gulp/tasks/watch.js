@@ -1,15 +1,14 @@
 'use strict';
 
-// var config = require('../config.js');
 var gulp = require('gulp');
-var livereload = require('gulp-livereload');
 
 // Watch
 gulp.task('watch', ['connect', 'serve'], function () {
+  var livereload = require('gulp-livereload');
   var server = livereload();
     // Watch for changes in `app` folder
     gulp.watch([
-        '.tmp/**/*'
+        'dist/**/*'
     ]).on('change', function(file) {
       server.changed(file.path);
     });
@@ -18,7 +17,7 @@ gulp.task('watch', ['connect', 'serve'], function () {
     gulp.watch('app/less/**/*.less', ['styles']);
 
     // Watch .js files
-    gulp.watch('app/scripts/**/*.js', ['script']);
+    gulp.watch('app/scripts/**/*.js', ['jshint']);
 
     // Watch image files
     gulp.watch('app/images/**/*', ['images']);

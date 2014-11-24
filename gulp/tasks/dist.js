@@ -1,7 +1,13 @@
 'use strict';
 
 var gulp = require('gulp');
-var size = require('gulp-size');
 
 // Build
-gulp.task('dist', ['htmlDist', 'imagesDist', 'stylesDist', 'scriptDist', 'test']);
+gulp.task('dist', ['bower'], function() {
+    GLOBAL.__debugBuild = false;
+    gulp.start('dist-build');
+});
+
+gulp.task('dist-build', ['html', 'images', 'styles', 'templates', 'jshint', 'vendor'], function() {
+    gulp.start('dist-test');
+});

@@ -1,67 +1,43 @@
 'use strict';
 
-var browserify = require('browserify');
-var shim = require('browserify-shim');
-var config = require('../config');
-var partialify = require('partialify');
 var gulp = require('gulp');
-var debug = require('gulp-debug');
-var source = require('vinyl-source-stream');
-var size = require('gulp-size');
-var karma = require('karma').server;
-var streamify = require('gulp-streamify');
-var uglify = require('gulp-uglify');
-var templateCache = require('gulp-angular-templatecache');
-var _ = require('lodash');
 
-var browserifyStep = function() {
-    return browserify('./app/scripts/main.js')
-        .transform(partialify)
-        .transform(shim)
-        .bundle({insertGlobals: false, debug: true})
-        .pipe(source('main.js'))
-}
+gulp.task('script', function () {
 
-var templateStep = function() {
-    return gulp.src('./app/templates/**/*.html')
-        .pipe(templateCache({standalone:true}))
-}
+    var config = require('../config');
 
-gulp.task('templates', function () {
-    return templateStep()
-        .pipe(gulp.dest(config.debug + '/scripts/'))
-        .pipe(size());
-});
+    var sourcemaps = require('gulp-sourcemaps');
+    var browserify = require('browserify');
+    var shim = require('browserify-shim');
+    var uglify = require('gulp-uglify');
+    var source = require('vinyl-source-stream');
+    var buffer = require('vinyl-buffer');
+    var handleError = require('../util/handleError');
+    var gutil = require('gulp-util');
 
-gulp.task('templatesDist', function() {
-    return templateStep()
-        .pipe(gulp.dest(config.release + '/scripts/'))
-        .pipe(size());
-});
+    var bundler = browserify({
+        entries: ['./app/scripts/app.js'],
+        insertGlobals: false,
+        debug: true
+    }).transform(shim);
 
-gulp.task('script', ['templates'], function () {
-    return browserifyStep()
-        .pipe(gulp.dest(config.debug + '/scripts/'));
-});
+    var pipe = bundler.bundle()
+        .on('error', handleError)
+        .pipe(source('app.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({loadMaps: true}));
 
-gulp.task('scriptDist', ['templatesDist'], function () {
-    return browserifyStep()
-        .pipe(streamify(uglify()))
+    if (GLOBAL.__debugBuild) {
+        gutil.log('Debug build, not minifying source');
+    } else {
+        gutil.log('Release build, minifying source');
+        pipe = pipe.pipe(uglify({
+            output: {
+                ascii_only: true
+            }
+        }));
+    }
+
+    return pipe.pipe(sourcemaps.write('./'))
         .pipe(gulp.dest(config.release + '/scripts/'));
-});
-
-gulp.task('test', ['scriptDist'], function(done) {
-    var config;
-    var configure = require('../../test/karma.dist.conf.js');
-    configure({set: function(c) { config = c;}});
-
-    karma.start(_.extend(config, {basePath: '', singleRun: true}), done);
-});
-
-gulp.task('tdd', ['script'], function(done) {
-    var config;
-    var configure = require('../../test/karma.debuf.conf.js');
-    configure({set: function(c) { config = c;}});
-
-    karma.start(_.extend(config, {basePath: '', singleRun: false}), done);
 });
