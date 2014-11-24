@@ -19,6 +19,7 @@
     "connect": "^2.16.2",
     "connect-livereload": "^0.4.0",
     "connect-prism": "git+https://git@github.com/neilrees/connect-prism.git",
+    "del": "^0.1.3",
     "grunt": "^0.4.5",
     "gulp": "^3.8.6",
     "gulp-angular-templatecache": "^1.2.1",
